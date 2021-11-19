@@ -3,11 +3,23 @@
 байтовового в строковый тип на кириллице.
 """
 import subprocess
+from chardet import detect
 
-args = ['ping', 'google.com', '-n', '5']
 
-subproc_ping = subprocess.Popen(args, stdout=subprocess.PIPE)
+def ping(url, count=4):
+    subproc_ping = subprocess.Popen(['ping', url], stdout=subprocess.PIPE)
+    n = 0
+    for reply in subproc_ping.stdout:
+        code = detect(reply)['encoding']
+        reply = reply.decode(code).encode('utf-8').decode('utf-8')
+        print(reply, end='')
+        if n == count:
+            print()
+            break
+        n += 1
 
-for line in subproc_ping.stdout:
-    line = line.decode('cp866').encode('utf-8')
-    print(line.decode('utf-8'))
+
+URLS = ['yandex.ru', 'google.com']
+
+for url in URLS:
+    ping(url)

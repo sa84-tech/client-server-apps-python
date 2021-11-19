@@ -5,10 +5,8 @@
 from task_1 import display_format
 
 
-b1 = b'class'
-b2 = b'function'
-b3 = b'method'
+WORDS = ['class', 'function', 'method']
 
-display_format(b1)
-display_format(b2)
-display_format(b3)
+for word in WORDS:
+    word_b = eval(f"b'{word}'")
+    display_format(word_b)

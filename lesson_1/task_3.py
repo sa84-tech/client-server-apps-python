@@ -2,9 +2,10 @@
 Определить, какие из слов «attribute», «класс», «функция», «type» невозможно записать в байтовом типе.
 """
 
-words = ['attribute', 'класс', 'функция', 'type']
+WORDS = ['attribute', 'класс', 'функция', 'type']
 
-for word in words:
-    print(word)
-
-
+for word in WORDS:
+    try:
+        bytes(word, 'ascii')
+    except UnicodeEncodeError:
+        print(f'The word {word} cannot be written in byte type')

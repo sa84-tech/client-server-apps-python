@@ -25,9 +25,9 @@ def dec(byte_value=None):
         return None
 
 
-words = ['разработка', 'разработка', 'protocol', 'standard']
+WORDS = ['разработка', 'разработка', 'protocol', 'standard']
 
-for word in words:
+for word in WORDS:
     enc_word = enc(word)
     if enc_word:
         dec_word = dec(enc_word)

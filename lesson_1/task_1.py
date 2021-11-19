@@ -10,16 +10,16 @@ def display_format(val):
 
 
 if __name__ == "__main__":
-    s1 = "разработка"
-    s2 = "сокет"
-    s3 = "декоратор"
-    u1 = '\u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430'
-    u2 = '\u0441\u043e\u043a\u0435\u0442'
-    u3 = '\u0434\u0435\u043a\u043e\u0440\u0430\u0442\u043e\u0440'
+    S_1 = "разработка"
+    S_2 = "сокет"
+    S_3 = "декоратор"
+    U_1 = '\u0440\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430'
+    U_2 = '\u0441\u043e\u043a\u0435\u0442'
+    U_3 = '\u0434\u0435\u043a\u043e\u0440\u0430\u0442\u043e\u0440'
 
-    check_format(s1)
-    check_format(s2)
-    check_format(s3)
-    check_format(u1)
-    check_format(u2)
-    check_format(u3)
+    display_format(S_1)
+    display_format(S_2)
+    display_format(S_3)
+    display_format(U_1)
+    display_format(U_2)
+    display_format(U_3)
