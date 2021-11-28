@@ -13,3 +13,20 @@
     c. Реализовать считывание данных из созданного файла и проверить, совпадают ли они
     с исходными.
 """
+import yaml
+
+FILE = './data/file.yaml'
+DATA = {
+    "α": ['one', 'two', 'three', 'four'],
+    "β": 0,
+    "γ": {'one': '1€', 'two': '2€', 'three': '3€', 'four': '4€'},
+}
+
+with open(FILE, 'w', encoding='utf-8') as f_n:
+    yaml.dump(DATA, f_n, default_flow_style=False, allow_unicode=True)
+
+with open(FILE, encoding='utf-8') as f_n:
+    output = yaml.load(f_n, Loader=yaml.SafeLoader)
+
+print(output)
+print(DATA == output)

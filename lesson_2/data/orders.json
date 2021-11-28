@@ -1,1 +1,25 @@
-{"orders": []}
+{
+    "orders": [
+        {
+            "item": "book",
+            "qtty": 29,
+            "price": 34.45,
+            "buyer": "John Dow",
+            "date": "2021-11-27-15.47.24"
+        },
+        {
+            "item": "book",
+            "qtty": 29,
+            "price": 34.45,
+            "buyer": "John Dow",
+            "date": "2021-11-27-15.47.40"
+        },
+        {
+            "item": "book",
+            "qtty": 29,
+            "price": 34.45,
+            "buyer": "John Dow",
+            "date": "2021-11-28-22.23.53"
+        }
+    ]
+}

@@ -21,18 +21,21 @@ import csv
 import re
 
 FILES = ['./data/info_1.txt', './data/info_2.txt', './data/info_3.txt']
+FILE = './data/file.csv'
 
 
-def get_data(files=[]):
-    main_data = [["Изготовитель системы", "Название ОС", "Код продукта", "Тип системы"]]
+def get_data(files):
+    """ Fetch data from list of files """
+
+    main_data = [("Изготовитель системы", "Название ОС", "Код продукта", "Тип системы")]
     os_prod_list = []
     os_name_list = []
     os_code_list = []
     os_type_list = []
     for file in files:
 
-        with open(file) as f:
-            text = f.readlines()
+        with open(file) as f_n:
+            text = f_n.readlines()
 
         for line in text:
             if re.match('Изготовитель системы', line):
@@ -49,8 +52,17 @@ def get_data(files=[]):
     return main_data
 
 
-def write_to_csv(files):
-    print(get_data(files))
+def write_to_csv(file):
+    """ Write data to file """
+    main_data = get_data(FILES)
+    with open(file, 'w', encoding='utf-8') as f:
+        f_writer = csv.writer(f)
+        for row in main_data:
+            f_writer.writerow(row)
 
 
-write_to_csv(FILES)
+if __name__ == '__main__':
+    write_to_csv(FILE)
+
+    with open(FILE, encoding='utf-8') as f:
+        print(f.read())
