@@ -27,6 +27,8 @@ class Messaging(ABC):
         self.encoding = encoding
 
     def get_message(self, sender):
+        print(type(sender))
+        print(sender)
         encoded_response = sender.recv(self.max_package_length)
         if isinstance(encoded_response, bytes):
             json_response = encoded_response.decode(self.encoding)

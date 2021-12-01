@@ -10,7 +10,7 @@ from utils.messaging import Messaging
 
 
 class Client(Messaging):
-    def __init__(self, srv_address='127.0.0.1', srv_port=DEFAULT_PORT, account_name='Guest'):
+    def __init__(self, srv_address=DEFAULT_IP_ADDRESS, srv_port=DEFAULT_PORT, account_name='Guest'):
         super().__init__()
         self.srv_address = srv_address
         self.srv_port = srv_port
