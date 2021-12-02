@@ -16,6 +16,7 @@ class Client(Messaging):
         self.srv_port = srv_port
         self.account_name = account_name
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     def __str__(self):
         return f'Client is connected to {self.srv_address}:{self.srv_port}'
@@ -50,6 +51,8 @@ class Client(Messaging):
             print('Connection failed')
         except (ValueError, json.JSONDecodeError):
             print('Failed to decode server message')
+        finally:
+            self.socket.close()
 
 
 if __name__ == '__main__':

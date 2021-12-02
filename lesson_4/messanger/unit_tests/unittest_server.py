@@ -14,7 +14,7 @@ class TestServer(unittest.TestCase):
         self.server = Server()
 
     def tearDown(self):
-        self.server.close()
+        self.server.socket.close()
 
     def test_get_port(self):
         self.assertEqual(self.server.port, DEFAULT_PORT)
