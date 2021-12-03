@@ -53,10 +53,9 @@ class Messaging(ABC):
                 address = argv[argv.index('-a') + 1]
             else:
                 address = DEFAULT_IP_ADDRESS
-            return address
+            return address, 'ok'
         except IndexError:
-            print("Incorrect IP address")
-            return -1
+            return -1, 'Incorrect IP address'
 
     @staticmethod
     def get_port(argv=[]):
@@ -67,10 +66,8 @@ class Messaging(ABC):
                     raise ValueError
             else:
                 port = DEFAULT_PORT
-            return port
+            return port, 'ok'
         except ValueError:
-            print('Valid port range: 1024-65535 ')
-            return -1
+            return -1, 'Valid port range: 1024-65535'
         except IndexError:
-            print("Incorrect port number")
-            return -1
+            return -1, 'Incorrect port number'

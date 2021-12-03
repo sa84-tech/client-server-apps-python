@@ -1,11 +1,12 @@
+import logging
 import sys
 import socket
 import json
 import time
 
+import log.client_log_config
 from utils.constants import DEFAULT_PORT, DEFAULT_IP_ADDRESS, RESPONSE, ERROR, ACTION, PRESENCE, TIME, USER, \
     ACCOUNT_NAME
-
 from utils.messaging import Messaging
 
 
@@ -17,6 +18,7 @@ class Client(Messaging):
         self.account_name = account_name
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.logger = logging.getLogger('client')
 
     def __str__(self):
         return f'Client is connected to {self.srv_address}:{self.srv_port}'
@@ -25,6 +27,7 @@ class Client(Messaging):
         if RESPONSE in message:
             if message[RESPONSE] == 200:
                 return '200 : OK'
+            self.logger.warning(f'400 : {message[ERROR]}')
             return f'400 : {message[ERROR]}'
         raise ValueError
 
@@ -41,27 +44,30 @@ class Client(Messaging):
     def connect(self):
         try:
             self.socket.connect((self.srv_address, self.srv_port))
-            print(self)
+            self.logger.info(self)
             init_message = self.create_init_message()
             self.send_message(self.socket, init_message)
             message = self.get_message(self.socket)
             response = self.parse_message(message)
             print(response)
         except ConnectionError:
-            print('Connection failed')
+            self.logger.error('Connection failed')
         except (ValueError, json.JSONDecodeError):
-            print('Failed to decode server message')
+            self.logger.error('Failed to decode server message')
         finally:
             self.socket.close()
 
 
 if __name__ == '__main__':
-    address = Messaging.get_address(sys.argv)
+    logger = logging.getLogger('client')
+    address, message = Messaging.get_address(sys.argv)
     if address == -1:
+        logger.critical(message)
         sys.exit(1)
 
-    port = Messaging.get_port(sys.argv)
+    port, message = Messaging.get_port(sys.argv)
     if port == -1:
+        logger.critical(message)
         sys.exit(1)
 
     client = Client(address, port)
