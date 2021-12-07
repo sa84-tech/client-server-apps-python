@@ -1,4 +1,3 @@
-"""Декораторы"""
 import os
 import sys
 import logging
@@ -15,23 +14,11 @@ else:
 
 
 class Log:
-    """Класс-декоратор"""
     def __call__(self, func):
         def decorated(*args, **kwargs):
-            """Обертка"""
             res = func(*args, **kwargs)
             LOGGER.debug(f'Function: {func.__name__}. Args: {args}, {kwargs}. '
                          f'Call from module: {func.__module__}. '
                          f'Call from function: {traceback.format_stack()[0].strip().split()[-1]}. ')
             return res
         return decorated
-
-
-# def log(func):
-#     def wrapper(*args, **kwargs):
-#         result = func(*args, **kwargs)
-#         LOGGER.info(f'\n---\nFunction: {func.__name__}. Args: {args}, {kwargs}.\n'
-#                     f'Call from module: {func.__module__}.\n'
-#                     f'Call from function: {traceback.format_stack()[0].strip().split()[-1]}.\n===')
-#         return result
-#     return wrapper
