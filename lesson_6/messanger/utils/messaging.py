@@ -1,6 +1,7 @@
 import json
 from abc import ABC, abstractmethod
 
+from .decorators import Log
 from .constants import MAX_PACKAGE_LENGTH, ENCODING, DEFAULT_PORT, DEFAULT_IP_ADDRESS
 
 
@@ -26,6 +27,7 @@ class Messaging(ABC):
         self.max_package_length = max_package_length
         self.encoding = encoding
 
+    @Log()
     def get_message(self, sender):
         encoded_response = sender.recv(self.max_package_length)
         if isinstance(encoded_response, bytes):
@@ -36,6 +38,7 @@ class Messaging(ABC):
             raise ValueError
         raise ValueError
 
+    @Log()
     def send_message(self, recipient, message):
         json_message = json.dumps(message)
         encoded_message = json_message.encode(self.encoding)

@@ -4,7 +4,7 @@ from logging import handlers
 
 LOGGER = logging.getLogger('server')
 
-FILE_HANDLER = handlers.TimedRotatingFileHandler("server.log", "D", 1, 7, encoding='utf-8')
+FILE_HANDLER = handlers.TimedRotatingFileHandler("logs/server.log", "D", 1, 7, encoding='utf-8')
 
 STREAM_HANDLER = logging.StreamHandler(sys.stderr)
 
@@ -15,7 +15,7 @@ STREAM_HANDLER.setFormatter(FORMATTER)
 
 LOGGER.addHandler(FILE_HANDLER)
 LOGGER.addHandler(STREAM_HANDLER)
-LOGGER.setLevel(logging.INFO)
+LOGGER.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@ import sys
 import json
 import logging
 
-import log.server_log_config
+from utils.decorators import Log
 from utils.constants import DEFAULT_PORT, MAX_CONNECTIONS, RESPONSE, ERROR, ACTION, USER, ACCOUNT_NAME, PRESENCE, TIME, \
     RESPONSE_DEFAULT_IP_ADDRESS
 from utils.messaging import Messaging
@@ -20,6 +20,7 @@ class Server(Messaging):
     def __str__(self):
         return f'Server is running on port {self.port}'
 
+    @Log()
     def parse_message(self, message):
         if ACTION in message and message[ACTION] == PRESENCE and TIME in message \
                 and USER in message and message[USER][ACCOUNT_NAME] == 'Guest':
@@ -29,6 +30,7 @@ class Server(Messaging):
             ERROR: 'Bad Request'
         }
 
+    @Log()
     def listen(self):
         self.socket.bind((self.ip_address, self.port))
         self.socket.listen(MAX_CONNECTIONS)

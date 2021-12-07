@@ -3,7 +3,7 @@ import sys
 
 LOGGER = logging.getLogger('client')
 
-FILE_HANDLER = logging.FileHandler("client.log", encoding='utf-8')
+FILE_HANDLER = logging.FileHandler("logs/client.log", encoding='utf-8')
 
 STREAM_HANDLER = logging.StreamHandler(sys.stderr)
 
@@ -14,7 +14,7 @@ STREAM_HANDLER.setFormatter(FORMATTER)
 
 LOGGER.addHandler(FILE_HANDLER)
 LOGGER.addHandler(STREAM_HANDLER)
-LOGGER.setLevel(logging.INFO)
+LOGGER.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':

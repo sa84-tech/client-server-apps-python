@@ -4,7 +4,7 @@ import socket
 import json
 import time
 
-import log.client_log_config
+from utils.decorators import Log, log
 from utils.constants import DEFAULT_PORT, DEFAULT_IP_ADDRESS, RESPONSE, ERROR, ACTION, PRESENCE, TIME, USER, \
     ACCOUNT_NAME
 from utils.messaging import Messaging
@@ -23,6 +23,7 @@ class Client(Messaging):
     def __str__(self):
         return f'Client is connected to {self.srv_address}:{self.srv_port}'
 
+    @Log()
     def parse_message(self, message):
         if RESPONSE in message:
             if message[RESPONSE] == 200:
@@ -31,6 +32,7 @@ class Client(Messaging):
             return f'400 : {message[ERROR]}'
         raise ValueError
 
+    @Log()
     def create_init_message(self):
         message = {
             ACTION: PRESENCE,
@@ -41,6 +43,7 @@ class Client(Messaging):
         }
         return message
 
+    @Log()
     def connect(self):
         try:
             self.socket.connect((self.srv_address, self.srv_port))
