@@ -13,7 +13,7 @@ from messanger.utils.constants import MESSAGE, MESSAGE_TEXT
 
 
 class Client(Messaging):
-    def __init__(self, srv_address=DEFAULT_IP_ADDRESS, srv_port=DEFAULT_PORT, mode='listen', account_name='Guest'):
+    def __init__(self, srv_address=DEFAULT_IP_ADDRESS, srv_port=DEFAULT_PORT, mode='send', account_name='Client1'):
         super().__init__()
         self.srv_address = srv_address
         self.srv_port = srv_port
@@ -49,7 +49,7 @@ class Client(Messaging):
 
     @Log()
     def create_message(self):
-        text = "Hello, how is it going?"
+        text = "Hi, how is it going?"
         message = {
             ACTION: MESSAGE,
             TIME: time.time(),
@@ -80,12 +80,15 @@ class Client(Messaging):
             while True:
                 if self.client_mode == 'send':
                     try:
-                        self.send_message(self.socket, self.create_message())
+                        send_message = self.create_message()
+                        self.send_message(self.socket, send_message)
+                        time.sleep(3)
                     except ConnectionError:
                         self.logger.error(f'Connection with server {self.srv_address} lost.')
                         sys.exit(1)
 
-                if self.client_mode == 'listen':
+                elif self.client_mode == 'listen':
+
                     try:
                         self.parse_message(self.get_message(self.socket))
                         time.sleep(3)

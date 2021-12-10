@@ -14,5 +14,8 @@ ACCOUNT_NAME = 'account_name'
 # Other constants
 PRESENCE = 'presence'
 RESPONSE = 'response'
+MESSAGE = 'message'
+SENDER = 'sender'
+MESSAGE_TEXT = 'message_text'
 ERROR = 'error'
 RESPONSE_DEFAULT_IP_ADDRESS = 'response_default_ip_address'

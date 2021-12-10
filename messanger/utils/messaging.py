@@ -30,6 +30,7 @@ class Messaging(ABC):
     @Log()
     def get_message(self, sender):
         encoded_response = sender.recv(self.max_package_length)
+        print('GET_MESSAGE',  sender.getpeername(), self.socket.getsockname(), encoded_response)
         if isinstance(encoded_response, bytes):
             json_response = encoded_response.decode(self.encoding)
             response = json.loads(json_response)
@@ -40,6 +41,7 @@ class Messaging(ABC):
 
     @Log()
     def send_message(self, recipient, message):
+        print('SEND MESSAGE', self.socket.getsockname(), recipient.getpeername(), message)
         json_message = json.dumps(message)
         encoded_message = json_message.encode(self.encoding)
         recipient.send(encoded_message)
