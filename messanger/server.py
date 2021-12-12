@@ -1,6 +1,5 @@
 import socket
 import sys
-import json
 import logging
 import time
 
@@ -27,7 +26,6 @@ class Server(Messaging):
 
     @Log()
     def parse_message(self, message):
-        # print('SERVER parse message', message)
         if ACTION in message:
             if message[ACTION] == PRESENCE and TIME in message and ACCOUNT_NAME in message:
                 return {RESPONSE: 200}
@@ -46,8 +44,8 @@ class Server(Messaging):
     @Log()
     def listen(self):
         self.socket.bind((self.ip_address, self.port))
+        self.socket.settimeout(0.5)
         self.socket.listen(MAX_CONNECTIONS)
-        self.socket.settimeout(1)
         self.logger.info(self)
 
         while True:
@@ -58,7 +56,6 @@ class Server(Messaging):
             else:
                 self.clients.append(client)
                 self.logger.info(f'Client {client_addr} has connected to server')
-            # print('self.clients', self.clients)
             w_clients = []
             r_clients = []
             errors = []
@@ -69,49 +66,28 @@ class Server(Messaging):
             except OSError:
                 pass
 
-            # print('w_clients, r_clients', w_clients, r_clients)
-
             if w_clients:
                 for sock in w_clients:
                     try:
                         message = self.get_message(sock)
                         response = self.parse_message(message)
-                        print('RESPONSE', response)
-                        # self.send_message(sock, response)
                         if ACTION in response:
                             self.messages.append(response)
                         else:
                             self.send_message(sock, response)
                     except:
-                        self.logger.error(f'Bad request from client: {sock.getpeername()}')
+                        self.logger.info(f'Client {sock.getpeername()} has disconnected from server')
                         self.clients.remove(sock)
-                    # finally:
-                    #     sock.close()
-                    # self.send_message(sock, response)
 
             if self.messages and r_clients:
-                # message = {
-                #     ACTION: MESSAGE,
-                #     SENDER: messages[0][0],
-                #     TIME: time.time(),
-                #     MESSAGE_TEXT: messages[0][1]
-                # }
-                # del messages[0]
                 message = self.messages.pop()
-                print('POP1(message)', message, '\nPOP2(messages)', self.messages)
                 for client in r_clients:
                     try:
                         self.send_message(client, message)
                     except:
                         self.logger.info(f'Client {client.getpeername()} disconnected from server.')
+                        client.close()
                         self.clients.remove(client)
-
-
-
-            # except (ValueError, json.JSONDecodeError):
-            #     self.logger.error(f'Bad request from client: {client}')
-            # finally:
-            #     client.close()
 
 
 if __name__ == '__main__':

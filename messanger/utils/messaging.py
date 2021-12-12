@@ -2,7 +2,7 @@ import json
 from abc import ABC, abstractmethod
 
 from .decorators import Log
-from .constants import MAX_PACKAGE_LENGTH, ENCODING, DEFAULT_PORT, DEFAULT_IP_ADDRESS
+from .constants import MAX_PACKAGE_LENGTH, ENCODING, DEFAULT_PORT, DEFAULT_IP_ADDRESS, DEFAULT_MODE
 
 
 class Messaging(ABC):
@@ -30,7 +30,6 @@ class Messaging(ABC):
     @Log()
     def get_message(self, sender):
         encoded_response = sender.recv(self.max_package_length)
-        print('GET_MESSAGE',  sender.getpeername(), self.socket.getsockname(), encoded_response)
         if isinstance(encoded_response, bytes):
             json_response = encoded_response.decode(self.encoding)
             response = json.loads(json_response)
@@ -41,7 +40,6 @@ class Messaging(ABC):
 
     @Log()
     def send_message(self, recipient, message):
-        print('SEND MESSAGE', self.socket.getsockname(), recipient.getpeername(), message)
         json_message = json.dumps(message)
         encoded_message = json_message.encode(self.encoding)
         recipient.send(encoded_message)
@@ -76,3 +74,31 @@ class Messaging(ABC):
             return -1, 'Valid port range: 1024-65535'
         except IndexError:
             return -1, 'Incorrect port number'
+
+    @staticmethod
+    def get_mode(argv=[]):
+        print(argv)
+        try:
+            if '-m' in argv:
+                mode = argv[argv.index('-m') + 1]
+                print(mode)
+                if mode != 'send' and mode != 'listen':
+                    raise ValueError
+            else:
+                mode = DEFAULT_MODE
+            return mode, 'ok'
+        except ValueError:
+            return -1, 'Incorrect mode value: only send or listen is allowed'
+        except IndexError:
+            return -1, 'Incorrect mode value: only send or listen is allowed'
+
+    @staticmethod
+    def get_name(argv=[]):
+        try:
+            if '-n' in argv:
+                name = argv[argv.index('-n') + 1]
+            else:
+                name = 'Guest'
+            return name, 'ok'
+        except IndexError:
+            return -1, 'Incorrect name value.'
