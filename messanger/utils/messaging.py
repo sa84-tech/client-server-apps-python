@@ -75,22 +75,22 @@ class Messaging(ABC):
         except IndexError:
             return -1, 'Incorrect port number'
 
-    @staticmethod
-    def get_mode(argv=[]):
-        print(argv)
-        try:
-            if '-m' in argv:
-                mode = argv[argv.index('-m') + 1]
-                print(mode)
-                if mode != 'send' and mode != 'listen':
-                    raise ValueError
-            else:
-                mode = DEFAULT_MODE
-            return mode, 'ok'
-        except ValueError:
-            return -1, 'Incorrect mode value: only send or listen is allowed'
-        except IndexError:
-            return -1, 'Incorrect mode value: only send or listen is allowed'
+    # @staticmethod
+    # def get_mode(argv=[]):
+    #     print(argv)
+    #     try:
+    #         if '-m' in argv:
+    #             mode = argv[argv.index('-m') + 1]
+    #             print(mode)
+    #             if mode != 'send' and mode != 'listen':
+    #                 raise ValueError
+    #         else:
+    #             mode = DEFAULT_MODE
+    #         return mode, 'ok'
+    #     except ValueError:
+    #         return -1, 'Incorrect mode value: only send or listen is allowed'
+    #     except IndexError:
+    #         return -1, 'Incorrect mode value: only send or listen is allowed'
 
     @staticmethod
     def get_name(argv=[]):

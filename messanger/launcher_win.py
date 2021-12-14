@@ -10,10 +10,10 @@ while True:
     elif action == 's':
         processes.append(subprocess.Popen('python server.py',
                                           creationflags=subprocess.CREATE_NEW_CONSOLE))
-        for i in range(2):
+        for i in range(1):
             processes.append(subprocess.Popen(f'python client.py -m send -n Sender_{i + 1}',
                                               creationflags=subprocess.CREATE_NEW_CONSOLE))
-        for i in range(5):
+        for i in range(1):
             processes.append(subprocess.Popen(f'python client.py -m listen -n Listener_{i + 1}',
                                               creationflags=subprocess.CREATE_NEW_CONSOLE))
     elif action == 'x':

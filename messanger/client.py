@@ -3,10 +3,11 @@ import sys
 import socket
 import json
 import time
+import threading
 
 from utils.decorators import Log
 from utils.constants import DEFAULT_PORT, DEFAULT_IP_ADDRESS, RESPONSE, ERROR, ACTION, PRESENCE, TIME, USER, \
-    ACCOUNT_NAME, MESSAGE, SENDER
+    ACCOUNT_NAME, MESSAGE, SENDER, RECEPIENT, EXIT
 from utils.messaging import Messaging
 
 from messanger.utils.constants import MESSAGE, MESSAGE_TEXT
@@ -33,7 +34,7 @@ class Client(Messaging):
             self.logger.warning(f'400 : {message[ERROR]}')
             return f'400 : {message[ERROR]}'
         elif ACTION in message and message[ACTION] == MESSAGE:
-            return f'Incoming message from user {message[SENDER]}:\n{message[MESSAGE_TEXT]}'
+            return f'Incoming message from user {message[SENDER]}: - \n{message[MESSAGE_TEXT]}'
         raise ValueError
 
     @Log()
@@ -47,14 +48,53 @@ class Client(Messaging):
 
     @Log()
     def create_message(self):
-        text = input('Enter message (type @quit to exit): ')
+        recipient = input('Enter recepient: ')
+        text = input('Enter message: ')
         message = {
             ACTION: MESSAGE,
             TIME: time.time(),
-            ACCOUNT_NAME: self.account_name,
+            SENDER: self.account_name,
+            RECEPIENT: recipient,
             MESSAGE_TEXT: text
         }
         return message
+
+    @Log()
+    def create_final_message(self):
+        message = {
+            ACTION: EXIT,
+            TIME: time.time(),
+            SENDER: self.account_name,
+        }
+        return message
+
+    @Log()
+    def start_sending_mode(self):
+        while True:
+            command = input('Type command to proceed, m - send message, q - exit: ')
+            if command == 'm':
+                message = self.create_message()
+                try:
+                    self.send_message(self.socket, message)
+                except ConnectionError:
+                    self.logger.error(f'Connection with server {self.srv_address} lost.')
+                    sys.exit(1)
+            elif command == 'q':
+                message = self.create_fianl_message()
+                try:
+                    self.send_message(self.socket, message)
+                    self.logger.info('Shutdown by user command')
+                    print('Bye')
+                    time.sleep(0.5)
+                    self.socket.close()
+                    sys.exit(0)
+                except ConnectionError:
+                    self.logger.error(f'Connection with server {self.srv_address} lost.')
+                    # sys.exit(1)
+                    break
+            else:
+                print("Unknown command")
+
 
     @Log()
     def start_send_mode(self):
@@ -72,17 +112,19 @@ class Client(Messaging):
                 sys.exit(1)
 
     @Log()
-    def start_listen_mode(self):
+    def start_reception_mode(self):
         while True:
             try:
                 in_message = self.parse_message(self.get_message(self.socket))
                 print(in_message)
             except ConnectionError:
                 self.logger.error(f'Connection with server {self.srv_address} lost.')
+                break
                 sys.exit(1)
             except (ValueError, json.JSONDecodeError):
                 self.logger.error('Failed to decode server message')
-                sys.exit(1)
+                # sys.exit(1)
+                break
 
     @Log()
     def connect(self):
@@ -100,15 +142,31 @@ class Client(Messaging):
         except (ValueError, json.JSONDecodeError):
             self.logger.error('Failed to decode server message')
         else:
-            if self.client_mode == 'send':
-                print('Client runs in SEND mode')
-                self.start_send_mode()
-            elif self.client_mode == 'listen':
-                print('Client runs in LISTEN mode')
-                self.start_listen_mode()
-            else:
-                print('Invalid mode status. Exiting...')
-                sys.exit(1)
+
+            receiver = threading.Thread(target=self.start_reception_mode)
+            receiver.daemon = True
+            receiver.start()
+
+            sender = threading.Thread(target=self.start_sending_mode)
+            sender.daemon = True
+            sender.start()
+            self.logger.debug('Messaging process started')
+
+            while True:
+                time.sleep(1)
+                if receiver.is_alive() and sender.is_alive():
+                    continue
+                break
+
+            # if self.client_mode == 'send':
+            #     print('Client runs in SEND mode')
+            #     self.start_send_mode()
+            # elif self.client_mode == 'listen':
+            #     print('Client runs in LISTEN mode')
+            #     self.start_listen_mode()
+            # else:
+            #     print('Invalid mode status. Exiting...')
+            #     sys.exit(1)
 
 
 if __name__ == '__main__':
@@ -123,8 +181,7 @@ if __name__ == '__main__':
 
     address = check_error(*Messaging.get_address(sys.argv))
     port = check_error(*Messaging.get_port(sys.argv))
-    mode = check_error(*Messaging.get_mode(sys.argv))
     name = check_error(*Messaging.get_name(sys.argv))
 
-    client = Client(srv_address=address, srv_port=port, mode=mode, account_name=name)
+    client = Client(srv_address=address, srv_port=port, account_name=name)
     client.connect()

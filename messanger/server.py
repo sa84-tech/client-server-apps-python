@@ -13,6 +13,7 @@ from utils.messaging import Messaging
 class Server(Messaging):
     logger = logging.getLogger('server')
     clients = []
+    clients_names = []  # [{name: User_name, message: Message_text},]
     messages = []
 
     def __init__(self, ip_address='', port=DEFAULT_PORT):
@@ -28,14 +29,11 @@ class Server(Messaging):
     def parse_message(self, message):
         if ACTION in message:
             if message[ACTION] == PRESENCE and TIME in message and ACCOUNT_NAME in message:
+                self.clients_names.append(message[ACCOUNT_NAME])
+                print(self.clients_names)
                 return {RESPONSE: 200}
             elif message[ACTION] == MESSAGE:
-                return {
-                    ACTION: MESSAGE,
-                    SENDER: message.get(ACCOUNT_NAME),
-                    TIME: time.time(),
-                    MESSAGE_TEXT: message[MESSAGE_TEXT].upper()
-                }
+                return message
         return {
             RESPONSE_DEFAULT_IP_ADDRESS: 400,
             ERROR: 'Bad Request'
@@ -55,7 +53,7 @@ class Server(Messaging):
                 pass
             else:
                 self.clients.append(client)
-                self.logger.info(f'Client {client_addr} has connected to server')
+                self.logger.info(f'Client {client_addr} has connected to serer')
             w_clients = []
             r_clients = []
             errors = []
@@ -80,14 +78,16 @@ class Server(Messaging):
                         self.clients.remove(sock)
 
             if self.messages and r_clients:
-                message = self.messages.pop()
-                for client in r_clients:
-                    try:
-                        self.send_message(client, message)
-                    except:
-                        self.logger.info(f'Client {client.getpeername()} disconnected from server.')
-                        client.close()
-                        self.clients.remove(client)
+                for message in self.messages:
+                    self.send_message()
+            #     message = self.messages.pop()
+            #     for client in r_clients:
+            #         try:
+            #             self.send_message(client, message)
+            #         except:
+            #             self.logger.info(f'Client {client.getpeername()} disconnected from server.')
+            #             client.close()
+            #             self.clients.remove(client)
 
 
 if __name__ == '__main__':
