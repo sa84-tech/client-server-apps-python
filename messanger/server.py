@@ -30,6 +30,7 @@ class Server(Messaging):
         if ACTION in message:
             if message[ACTION] == PRESENCE and TIME in message and ACCOUNT_NAME in message:
                 self.clients_names.append(message[ACCOUNT_NAME])
+                print(message)
                 print(self.clients_names)
                 return {RESPONSE: 200}
             elif message[ACTION] == MESSAGE:
@@ -70,7 +71,7 @@ class Server(Messaging):
                         message = self.get_message(sock)
                         response = self.parse_message(message)
                         if ACTION in response:
-                            self.messages.append(response)
+                            self.messages.append({'client': sock, 'response': response})
                         else:
                             self.send_message(sock, response)
                     except:
@@ -79,7 +80,9 @@ class Server(Messaging):
 
             if self.messages and r_clients:
                 for message in self.messages:
-                    self.send_message()
+                    print(message['client'].getpeername())
+                    self.send_message(message['client'], message['response'])
+            self.messages.clear()
             #     message = self.messages.pop()
             #     for client in r_clients:
             #         try:
