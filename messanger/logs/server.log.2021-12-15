@@ -1,0 +1,68 @@
+2021-12-15 10:14:26,111 - INFO     - server - Server is running on port 7777
+2021-12-15 10:14:36,462 - INFO     - server - Client ('127.0.0.1', 53413) has connected to serer
+2021-12-15 10:16:03,405 - INFO     - server - Client ('127.0.0.1', 53429) has connected to serer
+2021-12-15 10:32:41,890 - INFO     - server - Server is running on port 7777
+2021-12-15 10:32:46,282 - INFO     - server - Client ('127.0.0.1', 53837) has connected to serer
+2021-12-15 10:32:53,821 - INFO     - server - Client ('127.0.0.1', 53840) has connected to serer
+2021-12-15 10:37:05,487 - INFO     - server - Client ('127.0.0.1', 53840) has disconnected from server
+2021-12-15 10:37:54,882 - INFO     - server - Server is running on port 7777
+2021-12-15 10:37:57,884 - INFO     - server - Client ('127.0.0.1', 53889) has connected to serer
+2021-12-15 10:38:20,687 - INFO     - server - Client ('127.0.0.1', 53891) has connected to serer
+2021-12-15 10:39:21,102 - INFO     - server - Client ('127.0.0.1', 53891) has disconnected from server
+2021-12-15 10:42:23,286 - INFO     - server - Server is running on port 7777
+2021-12-15 10:42:23,782 - INFO     - server - Client ('127.0.0.1', 54187) has connected to serer
+2021-12-15 10:42:23,782 - INFO     - server - Client ('127.0.0.1', 54188) has connected to serer
+2021-12-15 10:44:01,108 - INFO     - server - Server is running on port 7777
+2021-12-15 10:44:01,171 - INFO     - server - Client ('127.0.0.1', 54212) has connected to serer
+2021-12-15 10:44:01,171 - INFO     - server - Client ('127.0.0.1', 54213) has connected to serer
+2021-12-15 10:44:38,654 - INFO     - server - Client ('127.0.0.1', 54213) has disconnected from server
+2021-12-15 10:46:35,207 - INFO     - server - Server is running on port 7777
+2021-12-15 10:46:35,270 - INFO     - server - Client ('127.0.0.1', 54432) has connected to serer
+2021-12-15 10:46:35,286 - INFO     - server - Client ('127.0.0.1', 54433) has connected to serer
+2021-12-15 10:46:54,804 - INFO     - server - Client ('127.0.0.1', 54432) has disconnected from server
+2021-12-15 10:47:03,509 - INFO     - server - Client ('127.0.0.1', 54433) has disconnected from server
+2021-12-15 10:55:46,158 - INFO     - server - Server is running on port 7777
+2021-12-15 10:55:46,217 - INFO     - server - Client ('127.0.0.1', 54697) has connected to serer
+2021-12-15 10:55:46,220 - INFO     - server - Client ('127.0.0.1', 54698) has connected to serer
+2021-12-15 10:56:06,313 - INFO     - server - Client ('127.0.0.1', 54698) has disconnected from server
+2021-12-15 10:56:06,814 - INFO     - server - Client ('127.0.0.1', 54697) has disconnected from server
+2021-12-15 11:08:06,310 - INFO     - server - Server is running on port 7777
+2021-12-15 11:08:06,383 - INFO     - server - Client ('127.0.0.1', 54819) has connected to serer
+2021-12-15 11:08:06,413 - INFO     - server - Client ('127.0.0.1', 54820) has connected to serer
+2021-12-15 11:08:06,413 - INFO     - server - Client ('127.0.0.1', 54821) has connected to serer
+2021-12-15 11:08:06,805 - INFO     - server - Client ('127.0.0.1', 54818) has connected to serer
+2021-12-15 11:10:27,164 - INFO     - server - Client ('127.0.0.1', 54818) has disconnected from server
+2021-12-15 11:10:35,322 - INFO     - server - Server is running on port 7777
+2021-12-15 11:10:35,443 - INFO     - server - Client ('127.0.0.1', 54836) has connected to serer
+2021-12-15 11:10:35,443 - INFO     - server - Client ('127.0.0.1', 54837) has connected to serer
+2021-12-15 11:10:35,453 - INFO     - server - Client ('127.0.0.1', 54838) has connected to serer
+2021-12-15 11:10:35,461 - INFO     - server - Client ('127.0.0.1', 54839) has connected to serer
+2021-12-15 11:11:25,757 - INFO     - server - Client ('127.0.0.1', 54838) has disconnected from server
+2021-12-15 11:11:28,775 - INFO     - server - Client ('127.0.0.1', 54836) has disconnected from server
+2021-12-15 11:11:31,301 - INFO     - server - Client ('127.0.0.1', 54839) has disconnected from server
+2021-12-15 11:21:02,079 - INFO     - server - Server is running on port 7777
+2021-12-15 11:21:02,220 - INFO     - server - Client ('127.0.0.1', 54935) has connected to serer
+2021-12-15 11:21:02,250 - INFO     - server - Client ('127.0.0.1', 54936) has connected to serer
+2021-12-15 11:21:02,258 - INFO     - server - Client ('127.0.0.1', 54937) has connected to serer
+2021-12-15 11:21:02,330 - INFO     - server - Client ('127.0.0.1', 54938) has connected to serer
+2021-12-15 11:21:28,976 - INFO     - server - Client ('127.0.0.1', 54938) has disconnected from server
+2021-12-15 11:21:43,321 - INFO     - server - Server is running on port 7777
+2021-12-15 11:21:43,492 - INFO     - server - Client ('127.0.0.1', 54940) has connected to serer
+2021-12-15 11:21:43,523 - INFO     - server - Client ('127.0.0.1', 54941) has connected to serer
+2021-12-15 11:21:43,583 - INFO     - server - Client ('127.0.0.1', 54942) has connected to serer
+2021-12-15 11:21:43,583 - INFO     - server - Client ('127.0.0.1', 54943) has connected to serer
+2021-12-15 11:45:31,278 - INFO     - server - Server is running on port 7777
+2021-12-15 11:45:31,382 - INFO     - server - Client ('127.0.0.1', 55527) has connected to serer
+2021-12-15 11:45:31,397 - INFO     - server - Client ('127.0.0.1', 55528) has connected to serer
+2021-12-15 11:45:31,432 - INFO     - server - Client ('127.0.0.1', 55529) has connected to serer
+2021-12-15 11:45:31,487 - INFO     - server - Client ('127.0.0.1', 55530) has connected to serer
+2021-12-15 11:47:23,420 - INFO     - server - Server is running on port 7777
+2021-12-15 11:47:23,448 - INFO     - server - Client ('127.0.0.1', 55552) has connected to serer
+2021-12-15 11:47:23,827 - INFO     - server - Client ('127.0.0.1', 55549) has connected to serer
+2021-12-15 11:47:23,888 - INFO     - server - Client ('127.0.0.1', 55550) has connected to serer
+2021-12-15 11:47:23,927 - INFO     - server - Client ('127.0.0.1', 55551) has connected to serer
+2021-12-15 11:53:57,828 - INFO     - server - Server is running on port 7777
+2021-12-15 11:53:57,961 - INFO     - server - Client ('127.0.0.1', 55633) has connected to serer
+2021-12-15 11:53:57,991 - INFO     - server - Client ('127.0.0.1', 55634) has connected to serer
+2021-12-15 11:53:58,007 - INFO     - server - Client ('127.0.0.1', 55635) has connected to serer
+2021-12-15 11:53:58,046 - INFO     - server - Client ('127.0.0.1', 55636) has connected to serer

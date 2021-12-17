@@ -7,7 +7,7 @@ import threading
 
 from utils.decorators import Log
 from utils.constants import DEFAULT_PORT, DEFAULT_IP_ADDRESS, RESPONSE, ERROR, ACTION, PRESENCE, TIME, USER, \
-    ACCOUNT_NAME, MESSAGE, SENDER, RECEPIENT, EXIT
+    MESSAGE, SENDER, RECIPIENT, EXIT, ACCOUNT_NAME
 from utils.messaging import Messaging
 
 from messanger.utils.constants import MESSAGE, MESSAGE_TEXT
@@ -24,7 +24,8 @@ class Client(Messaging):
         self.client_mode = mode
 
     def __str__(self):
-        return f'Client is connected to {self.srv_address}:{self.srv_port}'
+        return f'Client ({socket.gethostname()}, name: {self.account_name}) ' \
+               f'is connected to {self.srv_address}:{self.srv_port}'
 
     @Log()
     def parse_message(self, message):
@@ -34,7 +35,7 @@ class Client(Messaging):
             self.logger.warning(f'400 : {message[ERROR]}')
             return f'400 : {message[ERROR]}'
         elif ACTION in message and message[ACTION] == MESSAGE:
-            return f'Incoming message from user {message[SENDER]}: - \n{message[MESSAGE_TEXT]}'
+            return f'\nIncoming message from {message[SENDER]}:\n{message[MESSAGE_TEXT]}'
         raise ValueError
 
     @Log()
@@ -42,19 +43,21 @@ class Client(Messaging):
         message = {
             ACTION: PRESENCE,
             TIME: time.time(),
-            ACCOUNT_NAME: self.account_name
+            USER: {
+                ACCOUNT_NAME: self.account_name
+            }
         }
         return message
 
     @Log()
     def create_message(self):
-        recipient = input('Enter recepient: ')
+        recipient = input('Enter recipient: ')
         text = input('Enter message: ')
         message = {
             ACTION: MESSAGE,
             TIME: time.time(),
             SENDER: self.account_name,
-            RECEPIENT: recipient,
+            RECIPIENT: recipient,
             MESSAGE_TEXT: text
         }
         return message
@@ -80,12 +83,12 @@ class Client(Messaging):
                     self.logger.error(f'Connection with server {self.srv_address} lost.')
                     sys.exit(1)
             elif command == 'q':
-                message = self.create_fianl_message()
+                message = self.create_final_message()
                 try:
                     self.send_message(self.socket, message)
                     self.logger.info('Shutdown by user command')
                     print('Bye')
-                    time.sleep(0.5)
+                    time.sleep(1)
                     self.socket.close()
                     sys.exit(0)
                 except ConnectionError:
@@ -94,6 +97,7 @@ class Client(Messaging):
                     break
             else:
                 print("Unknown command")
+            time.sleep(1)
 
 
     @Log()
@@ -132,6 +136,7 @@ class Client(Messaging):
             self.socket.connect((self.srv_address, self.srv_port))
             self.logger.info(self)
             init_message = self.create_init_message()
+            print(init_message)
             self.send_message(self.socket, init_message)
             message = self.get_message(self.socket)
             response = self.parse_message(message)
