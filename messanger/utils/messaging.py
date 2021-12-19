@@ -31,6 +31,8 @@ class Messaging(ABC):
     def get_message(self, sender):
         encoded_response = sender.recv(self.max_package_length)
         if isinstance(encoded_response, bytes):
+            if len(encoded_response) == 0:
+                return ''
             json_response = encoded_response.decode(self.encoding)
             response = json.loads(json_response)
             if isinstance(response, dict):

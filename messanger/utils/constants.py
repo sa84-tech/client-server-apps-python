@@ -17,11 +17,11 @@ ALERT = 'alert'
 PRESENCE = 'presence'
 MESSAGE_TEXT = 'message'
 MESSAGE = 'msg'
+SENDER = 'from'
+RECIPIENT = 'to'
 
 # Other constants
 RESPONSE = 'response'
-SENDER = 'from'
-RECIPIENT = 'to'
 RESPONSE_DEFAULT_IP_ADDRESS = 'response_default_ip_address'
 DEFAULT_MODE = 'listen'
 
